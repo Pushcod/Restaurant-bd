@@ -20,7 +20,10 @@ return new class extends Migration
             $table->boolean('count_client');
             $table->date('date_up');
             $table->date('date_create');
+<<<<<<< HEAD:database/migrations/2024_03_06_161105_create_clients_table.php
             $table->boolean('number_table');
+=======
+>>>>>>> 3bbc84b2d957c866cf129596b969e7553c104ecb:database/migrations/2024_03_06_205919_create_clients_table.php
             $table->timestamps();
         });
     }
