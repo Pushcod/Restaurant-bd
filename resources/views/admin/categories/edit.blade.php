@@ -1,4 +1,4 @@
-@seoTitle(__('Редактировать блюдо'))
+@seoTitle(__('Редактировать заявку'))
 
 <x-app-layout>
     <x-slot:header>

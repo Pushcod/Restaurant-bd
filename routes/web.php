@@ -36,11 +36,17 @@ Route::middleware(['splade'])->group(function () {
         ]);
     });
 
-    Route::middleware([
-        'auth:sanctum',
-        config('jetstream.auth_session'),
-        'verified',
-    ])->group(function () {
+    Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])->group(function () {
         Route::view('/dashboard', 'dashboard')->name('dashboard');
+
+        Route::resource('menus', \App\Http\Controllers\Admin\MenusController::class);
+
+        Route::resource('orders', \App\Http\Controllers\Admin\OrdersController::class);
+
+        Route::resource('workers', \App\Http\Controllers\Admin\WorkersController::class);
+
+        Route::resource('clients', \App\Http\Controllers\Admin\ClientsController::class);
+
     });
+
 });

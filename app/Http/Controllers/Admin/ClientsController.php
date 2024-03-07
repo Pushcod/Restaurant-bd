@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Client;
 use Illuminate\Http\Request;
+use ProtoneMedia\Splade\Facades\Toast;
 
 class ClientsController extends Controller
 {
@@ -12,7 +14,7 @@ class ClientsController extends Controller
      */
     public function index()
     {
-        //
+         return view('admin.clients.index');
     }
 
     /**
@@ -20,7 +22,7 @@ class ClientsController extends Controller
      */
     public function create()
     {
-        //
+         return view('admin.clients.create');
     }
 
     /**
@@ -28,7 +30,19 @@ class ClientsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $client = new Client();
+        $client->name = $request->input('name');
+        $client->number_client = $request->input('number_client');
+        $client->number_phone = $request->input('number_phone');
+        $client->number_table = $request->boolean('number_table');
+        $client->email = $request->input('email');
+        $client->count_client = $request->boolean('count_client');
+        $client->date_up = $request->date('date_up');
+        $client->date_create = $request->date('date_create');
+        $client->isActive = $request->input('isActive');
+        $client->save();
+        Toast::title('Категория добавлена');
+        return redirect()->route('clients.index');
     }
 
     /**

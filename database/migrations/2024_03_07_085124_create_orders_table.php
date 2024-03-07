@@ -16,8 +16,9 @@ return new class extends Migration
             $table->string('number');
             $table->foreignId('menu_id');
             $table->date('date_up');
-            $table->string('number_table');
-            
+            $table->foreignId('client_id');
+            $table->boolean('isActive');
+
             $table->timestamps();
         });
     }

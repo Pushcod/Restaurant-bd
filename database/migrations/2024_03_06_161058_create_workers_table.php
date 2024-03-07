@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('mail');
             $table->string('home');
             $table->string('exp');
-            $table->boolean('workshift');
+//            $table->boolean('workshift');
             $table->time('worktime');
             $table->string('jobtitle');
             $table->string('salary');

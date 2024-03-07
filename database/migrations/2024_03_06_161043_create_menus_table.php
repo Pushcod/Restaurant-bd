@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('cost');
             $table->time('time');
-            $table->string('genre');
+            $table->text('description');
+            $table->text('image');
             $table->boolean('cheffood');
             $table->boolean('isActive');
             $table->timestamps();

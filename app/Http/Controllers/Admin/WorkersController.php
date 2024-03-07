@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Worker;
 use Illuminate\Http\Request;
+use ProtoneMedia\Splade\Facades\Toast;
 
 class WorkersController extends Controller
 {
@@ -12,7 +14,7 @@ class WorkersController extends Controller
      */
     public function index()
     {
-        //
+         return view('admin.workers.index');
     }
 
     /**
@@ -20,7 +22,7 @@ class WorkersController extends Controller
      */
     public function create()
     {
-        //
+         return view('admin.workers.create');
     }
 
     /**
@@ -28,7 +30,20 @@ class WorkersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $worker = new Worker();
+        $worker->name = $request->input('name');
+        $worker->passport = $request->input('passport');
+        $worker->number = $request->input('number');
+        $worker->email = $request->input('email');
+        $worker->home = $request->input('home');
+        $worker->exp = $request->boolean('exp');
+        $worker->worktime = $request->input('worktime');
+        $worker->jobtitle = $request->input('jobtitle');
+        $worker->salary = $request->boolean('salary');
+        $worker->isActive = $request->input('isActive');
+        $worker->save();
+        Toast::title('Работник добавлен');
+        return redirect()->route('workers.index');
     }
 
     /**

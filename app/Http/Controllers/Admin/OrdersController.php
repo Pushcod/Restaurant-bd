@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Client;
+use App\Models\Menu;
+use App\Models\Order;
 use Illuminate\Http\Request;
+use ProtoneMedia\Splade\Facades\Toast;
 
 class OrdersController extends Controller
 {
@@ -12,7 +16,7 @@ class OrdersController extends Controller
      */
     public function index()
     {
-        //
+         return view('admin.orders.index');
     }
 
     /**
@@ -20,7 +24,9 @@ class OrdersController extends Controller
      */
     public function create()
     {
-        //
+        $menus = Menu::pluck('name','id')->toArray();
+        $clients = Client::pluck('name','id')->toArray();
+         return view('admin.orders.create', compact('menus','clients'));
     }
 
     /**
@@ -28,7 +34,15 @@ class OrdersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $order = new Order();
+        $order->name = $request->input('name');
+        $order->menu_id = $request->input('menu_id');
+        $order->client_id = $request->input('client_id');
+        $order->date_up = $request->date('date_up');
+        $order->isActive = $request->input('isActive');
+        $order->save();
+        Toast::title('Категория добавлена');
+        return redirect()->route('orders.index');
     }
 
     /**

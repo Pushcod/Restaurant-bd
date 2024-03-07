@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
+use App\Models\Menu;
 use Illuminate\Http\Request;
+use ProtoneMedia\Splade\Facades\Toast;
+use ProtoneMedia\Splade\SpladeTable;
 
 class MenusController extends Controller
 {
@@ -12,7 +16,18 @@ class MenusController extends Controller
      */
     public function index()
     {
-        //
+         return view('admin.menus.index',[
+            'menus' => SpladeTable::for(Menu::class)
+            ->withGlobalSearch(columns:['name'])
+            ->column('name',label: "Название блюда", sortable:true)
+            ->column('description',label: "Описание Блюда")
+            ->column('image', label: "Изображение")
+            ->column('time',label: "Время готовки(Д.|Ч.|мин.)")
+            ->column('cost',label: 'Цена блюда(₽)')
+            ->column('cheffood',label: "Блюдо от шефа")
+            ->column('isActive',label: "Активность блюда")
+            ->paginate(10)
+         ]);
     }
 
     /**
@@ -20,7 +35,7 @@ class MenusController extends Controller
      */
     public function create()
     {
-        //
+         return view('admin.menus.create');
     }
 
     /**
@@ -28,7 +43,17 @@ class MenusController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $menu = new Menu();
+        $menu->name = $request->input('name');
+        $menu->cost = $request->input('cost');
+        $menu->time = $request->input('time');
+        $menu->description = $request->input('description');
+        $menu->image = $request->file('image')->store('public/menu');
+        $menu->cheffood = $request->boolean('cheffood');
+        $menu->isActive = $request->input('isActive');
+        $menu->save();
+        Toast::title('меню добавлено');
+        return redirect()->route('menus.index');
     }
 
     /**
